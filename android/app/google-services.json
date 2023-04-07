@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1069058523554",
+    "project_id": "anomalyreport-4163e",
+    "storage_bucket": "anomalyreport-4163e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1069058523554:android:c72b42e75a9bb685f7b2fb",
+        "android_client_info": {
+          "package_name": "com.diy.anomalyreport"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1069058523554-0m7k0n9a9vij9sdaf7i0h24kitmues4p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzhKr8lhlpKHB0TCGtxmqllEtWnq_c2xo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1069058523554-0m7k0n9a9vij9sdaf7i0h24kitmues4p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
