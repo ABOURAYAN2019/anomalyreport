@@ -55,12 +55,12 @@ class AuthController extends GetxController {
   }
 
   void login() async {
-    print(email.text + "@khatma.ma");
+    print(email.text);
     print(password.text);
     try {
       EasyLoading.show(status: 'Connexion...');
       await firebaseAuth.signInWithEmailAndPassword(
-          email: email.text + "@khatma.ma", password: password.text);
+          email: email.text, password: password.text);
       await getuserdata();
       EasyLoading.dismiss();
       Get.offAll(ControlView());
@@ -68,7 +68,7 @@ class AuthController extends GetxController {
       EasyLoading.dismiss();
       print(e.code);
       Get.snackbar(
-        'خطا في الوصول لحسابك',
+        "Erreur lors de l'accès à votre compte",
         e.code,
         colorText: Colors.black,
         snackPosition: SnackPosition.BOTTOM,

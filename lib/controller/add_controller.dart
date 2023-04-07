@@ -10,11 +10,10 @@ import 'package:get/get.dart';
 import 'package:anomalyreport/data/static.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
-import 'package:anomalyreport/model/khatmamodel.dart';
 import 'package:anomalyreport/model/user_model.dart';
 
 class AddController extends GetxController {
- // FirebaseFirestore firestore = FirebaseFirestore.instance;
+  // FirebaseFirestore firestore = FirebaseFirestore.instance;
   TextEditingController descriptionCrt = TextEditingController();
   TextEditingController nameCrt = TextEditingController();
   List<String> ahzabbypart = [];
@@ -104,60 +103,6 @@ class AddController extends GetxController {
     // update();
     // showmsg(
     //     "مبروك لقد أتممت إنشاء مجموعة الحفظ ،عليك الآن دعوة أصدقائك  لإختيار الإجزاء ، والبدء بالختمة  ");
-  }
-
-  getahazabbypart() {
-    List<List<String>> subliste = [];
-    List<String> sublisteout = [];
-    int start;
-    int end;
-    int hizbz = int.parse(hizb);
-    int parts = (60.0 / int.parse(hizb)).round();
-    List<int> listintahzab = Iterable<int>.generate(parts).toList();
-    listintahzab.forEach((element) {
-      start = element * hizbz;
-      end = (hizbz * (element + 1)) - 1;
-      subliste.add(listahzab.sublist(start, end + 1));
-    });
-    subliste.forEach((element) {
-      sublisteout.add(element.join("-"));
-    });
-    ahzabbypart = sublisteout;
-    //return sublisteout;
-  }
-
-  Map<String, dynamic> gtprogramme() {
-    int parts = (60.0 / int.parse(hizb)).round();
-    List<int> ahzab = Iterable<int>.generate(parts).toList();
-    int hzbparpersonne = (60.0 / parts).round();
-    List<dynamic> subscribers = ahzab
-        .map((e) => {
-              "id": e.toString(),
-              "owermail": "",
-              "owername": "",
-              "taked": false,
-              "finished": false,
-              "finisheddate": 0,
-              "retard": false,
-              "observation": "لا ملاحظة",
-              "owermail2": "",
-              "owername2": "",
-              "fromto": ahzabbypart[e],
-              "start": hizbstart[hzbparpersonne * e],
-              "end": hizbend[(hzbparpersonne * (e + 1)) - 1],
-              "subdate": 0,
-              "updatedate": 0,
-              "reader": "",
-              "idnbr": e,
-              "islast": e == (parts - 1) ? true : false
-            })
-        .toList();
-    Map<String, dynamic> myahzab = {};
-    for (int i = 0; i < subscribers.length; i++) {
-      myahzab.addAll({i.toString(): subscribers[i]});
-    }
-
-    return myahzab;
   }
 
   Adddatetimedebut() async {

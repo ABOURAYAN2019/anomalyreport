@@ -15,13 +15,11 @@ import 'package:get/get.dart';
 import 'package:anomalyreport/data/static.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
-import 'package:anomalyreport/model/khatmamodel.dart';
 import 'package:anomalyreport/model/partmodel.dart';
 import 'package:anomalyreport/model/user_model.dart';
 import 'package:anomalyreport/model/usermission.dart';
 import 'package:anomalyreport/view/commonwidgets/custom-dropdown_form_field.dart';
-import 'package:anomalyreport/view/screens/addusers.dart';
-import 'package:anomalyreport/view/screens/duplicate.dart';
+
 import 'package:anomalyreport/view/screens/manage.dart';
 
 class AdminController extends GetxController {
@@ -29,7 +27,7 @@ class AdminController extends GetxController {
   PartModel selectedpart = PartModel();
   List<PartModel> parts = [];
   List<UserModel> users = [];
-  List<KhatmaModel> khatamati = [];
+
   int hzb = 0;
   String hizb = "";
   String type = "";
@@ -37,7 +35,6 @@ class AdminController extends GetxController {
   String repeated = "";
   UserModel registreduserselected = UserModel();
 
-  KhatmaModel mykhatma = KhatmaModel();
   UserModel selecteduser = UserModel();
 
   String? _user = Get.find<AuthController>().user;
@@ -61,15 +58,6 @@ class AdminController extends GetxController {
     // print(_userdata.email);
   }
 
- 
-  
- 
-
-
-
- 
-
-  
   close() {
     AwesomeDialog(
       context: Get.context!,
@@ -79,20 +67,16 @@ class AdminController extends GetxController {
       desc: "تقوم الآن بحدف الختمة كاملة من قاعدة البيانات",
       btnCancelOnPress: () {},
       btnOkOnPress: () {
-     
         Get.back();
       },
     ).show();
   }
 
-
- 
-
   @override
   void onInit() async {
     await getuserdata();
-   // getdata();
-   // Getallusers();
+    // getdata();
+    // Getallusers();
     // TODO: implement onInit
     super.onInit();
   }

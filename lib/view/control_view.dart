@@ -42,9 +42,7 @@ class ControlView extends GetWidget<AuthController> {
                     ],
                   ),
                   body: controller.currentScreen,
-                  bottomNavigationBar: bottomNavigationBar(
-                    isadmin: moncrt.isadmin,
-                  ),
+                  bottomNavigationBar: bottomNavigationBar(),
                 ),
               ),
             );
@@ -53,11 +51,8 @@ class ControlView extends GetWidget<AuthController> {
 }
 
 class bottomNavigationBar extends StatelessWidget {
-  final choice;
-  final bool isadmin;
-  bottomNavigationBar({Key? key, this.choice, required this.isadmin})
-      : super(key: key);
-  final List<BottomNavigationBarItem> adminlist = [
+  bottomNavigationBar({Key? key}) : super(key: key);
+  final List<BottomNavigationBarItem> list = [
     BottomNavigationBarItem(
       icon: Icon(
         Icons.task_alt,
@@ -68,93 +63,19 @@ class bottomNavigationBar extends StatelessWidget {
         color: Colors.amber,
         size: 30,
       ),
-      label: "مهامي",
+      label: "Déclarer",
     ),
     BottomNavigationBarItem(
       icon: Icon(
-        Icons.trending_up,
+        Icons.factory,
         size: 30,
       ),
       activeIcon: Icon(
-        Icons.trending_up,
+        Icons.factory,
         color: Colors.amber,
         size: 30,
       ),
       label: "تطور الختمات",
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(
-        Icons.new_label,
-        size: 30,
-      ),
-      activeIcon: Icon(
-        Icons.new_label,
-        color: Colors.amber,
-        size: 30,
-      ),
-      label: "ختمة جديدة",
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(
-        Icons.admin_panel_settings_sharp,
-        size: 30,
-      ),
-      activeIcon: Icon(
-        Icons.admin_panel_settings_sharp,
-        color: Colors.amber,
-        size: 30,
-      ),
-      label: "الإدارة",
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(
-        Icons.stacked_bar_chart_outlined,
-        size: 30,
-      ),
-      activeIcon: Icon(
-        Icons.stacked_bar_chart_outlined,
-        color: Colors.amber,
-        size: 30,
-      ),
-      label: "إحصائيات",
-    )
-  ];
-  final List<BottomNavigationBarItem> userliste = [
-    BottomNavigationBarItem(
-      icon: Icon(
-        Icons.task_alt,
-        size: 30,
-      ),
-      activeIcon: Icon(
-        Icons.task_alt,
-        color: Colors.amber,
-        size: 30,
-      ),
-      label: "مهامي",
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(
-        Icons.trending_up_outlined,
-        size: 30,
-      ),
-      activeIcon: Icon(
-        Icons.trending_up_outlined,
-        color: Colors.amber,
-        size: 30,
-      ),
-      label: "تتبع الختمات",
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(
-        Icons.stacked_bar_chart_rounded,
-        size: 30,
-      ),
-      activeIcon: Icon(
-        Icons.stacked_bar_chart_rounded,
-        color: Colors.amber,
-        size: 30,
-      ),
-      label: "إحصائياتي",
     ),
   ];
 
@@ -175,12 +96,10 @@ class bottomNavigationBar extends StatelessWidget {
             fontFamily: 'almarai',
             fontWeight: FontWeight.bold),
         type: BottomNavigationBarType.fixed,
-        items: isadmin == true ? adminlist : userliste,
+        items: list,
         currentIndex: controller.navigatorValue,
         onTap: (index) {
-          isadmin == false
-              ? controller.changeSelectedValue(index)
-              : controller.changeSelectedValueadmin(index);
+          controller.changeSelectedValue(index);
         },
       ),
     );
