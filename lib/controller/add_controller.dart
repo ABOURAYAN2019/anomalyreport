@@ -128,10 +128,14 @@ class AddController extends GetxController {
     DatabaseReference ref = database.ref("$domaine/anomalies");
     newPostKey = ref.push().key!;
     await ref.child(newPostKey).update(an.toJson()).then((value) {
+      EasyLoading.dismiss();
       showmsg("Votre anomalie à été ajoutéd à la base");
       t_date_debut.text = "";
+
       descriptionCrt.text = "";
       update();
+    }).catchError((err) {
+      EasyLoading.dismiss();
     });
 
     // await col.add(kh.toJson()).then((value) => _dockey = value.id);
@@ -263,5 +267,31 @@ class AddController extends GetxController {
     } catch (e) {
       print('error occured');
     }
+  }
+
+  addphoto() {
+    Get.bottomSheet(Container(
+        height: 150,
+        color: Colors.grey,
+        child: Center(
+            child: Column(
+          children: [
+            ListTile(
+                leading: new Icon(Icons.photo_library),
+                title: new Text('Gallery'),
+                onTap: () {
+                  imgFromGallery();
+                  Get.back();
+                }),
+            new ListTile(
+              leading: new Icon(Icons.photo_camera),
+              title: new Text('Camera'),
+              onTap: () {
+                imgFromCamera();
+                Get.back();
+              },
+            ),
+          ],
+        ))));
   }
 }

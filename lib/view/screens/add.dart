@@ -22,13 +22,25 @@ class Add extends StatelessWidget {
         margin: const EdgeInsets.all(10.0),
         padding: const EdgeInsets.all(3.0),
         child: Card(
-            elevation: 4,
+            elevation: 5,
             child: GetBuilder<AddController>(
               builder: (controller) => Form(
                   key: _formKey,
                   child: SingleChildScrollView(
                       child: Column(
                     children: [
+                      ListTile(
+                          leading: Icon(Icons.dashboard),
+                          tileColor: Colors.amber.shade100,
+                          title: Text("Fiche anomalie"),
+                          trailing: IconButton(
+                              onPressed: () {
+                                controller.addphoto();
+                              },
+                              icon: Icon(
+                                Icons.attach_file_rounded,
+                                size: 40,
+                              ))),
                       CustomTextformfield(
                         valid: (val) {
                           if (val == null) return "Vide";
@@ -77,24 +89,6 @@ class Add extends StatelessWidget {
                           hintText: "Type"),
                       SizedBox(
                         height: 10,
-                      ),
-                      ListTile(
-                        title: Text("Image ou illustration"),
-                        trailing: Row(
-                          children: [
-                            Icon(
-                              Icons.camera,
-                              size: 40,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Icon(
-                              Icons.folder,
-                              size: 40,
-                            )
-                          ],
-                        ),
                       ),
                       CustomButton(
                         onpressed: () {
