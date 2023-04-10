@@ -1,6 +1,5 @@
 import 'package:anomalyreport/controller/add_controller.dart';
 import 'package:anomalyreport/controller/admin_controller.dart';
-
 import 'package:anomalyreport/view/screens/add.dart';
 import 'package:anomalyreport/view/screens/manage.dart';
 

@@ -22,16 +22,12 @@ import 'package:anomalyreport/view/commonwidgets/custom-dropdown_form_field.dart
 import 'package:anomalyreport/view/screens/manage.dart';
 
 class AdminController extends GetxController {
-  List<String?> khatmausers = [];
   FirebaseDatabase database = FirebaseDatabase.instance;
 
   List<UserModel> users = [];
 
   int hzb = 0;
-  String hizb = "";
-  String type = "";
-  String selectedusername = "";
-  String repeated = "";
+  
   UserModel registreduserselected = UserModel();
 
   UserModel selecteduser = UserModel();

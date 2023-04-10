@@ -17,28 +17,22 @@ class AuthController extends GetxController {
   String? email_, password_;
   MyServices myservices = Get.find();
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  late Rx<User?> firebaseUser;
+  late Rx<User?> firebaseUser = Rxn<User>();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
   String? get user => firebaseUser.value?.email;
   String? get username => firebaseUser.value?.displayName;
   String? get uid => firebaseUser.value?.uid;
-  bool isadmin = false;
 
   GlobalKey<FormState> formKey_ = GlobalKey<FormState>();
 
   @override
   void onInit() async {
-    super.onInit();
-
     firebaseUser = Rx<User?>(firebaseAuth.currentUser);
     inspect(firebaseUser);
-
-    firebaseUser!.bindStream(firebaseAuth.userChanges());
-    if (uid != null) {}
-
-    // ever(firebaseUser, _setInitialScreen);
+    firebaseUser.bindStream(firebaseAuth.userChanges());
+    super.onInit();
   }
 
   void login() async {

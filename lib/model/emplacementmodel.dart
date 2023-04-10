@@ -1,7 +1,7 @@
 class Emplacementmodel {
   late String? key;
   late String? eqp;
-  late String? id;
+  late int? id;
 
   Emplacementmodel({
     this.id,
@@ -15,7 +15,6 @@ class Emplacementmodel {
     }
 
     id = map["id"];
-
     key = map["key"];
     eqp = map["eqp"];
   }

@@ -7,9 +7,19 @@ class AnomalyModel {
   late String? image;
   late String? status;
   late String? comments;
+  late String? description;
+  late String? user;
+  late int? adddate;
+  late int? updatedate;
+  late int? terminatedate;
   AnomalyModel(
       {this.image,
+      this.user,
+      this.description,
       this.id,
+      this.adddate,
+      this.updatedate,
+      this.terminatedate,
       this.key,
       this.emplacement,
       this.type,
@@ -25,14 +35,20 @@ class AnomalyModel {
     image = map["image"];
     id = map["id"];
     key = map["key"];
+    description = map["description"];
     emplacement = map["emplacement"];
     type = map["type"];
     status = map["status"];
     date = map["date"];
+    user = map["user"];
+    updatedate = map["updatedate"];
+    terminatedate = map["terminatedate"];
+    adddate = map["adddate"];
   }
 
   toJson() {
     return {
+      "image": image,
       "id": id,
       "comments": comments,
       "key": key,
@@ -40,6 +56,11 @@ class AnomalyModel {
       "type": type,
       "status": status,
       "date": date,
+      "description": description,
+      "user": user,
+      "adddate": adddate,
+      "updatedate": updatedate,
+      "terminatedate": terminatedate
     };
   }
 }

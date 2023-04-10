@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:anomalyreport/model/anomalymodel.dart';
 import 'package:anomalyreport/model/emplacementmodel.dart';
 import 'package:anomalyreport/model/typeModel.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -11,46 +12,49 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:anomalyreport/data/static.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
-import 'package:anomalyreport/model/user_model.dart';
+import 'package:path/path.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'dart:io';
 
 class AddController extends GetxController {
   // FirebaseFirestore firestore = FirebaseFirestore.instance;
   TextEditingController descriptionCrt = TextEditingController();
   TextEditingController nameCrt = TextEditingController();
   FirebaseDatabase database = FirebaseDatabase.instance;
-
+  String? _user = Get.find<AuthController>().user;
+  String? get user => _user;
   List<String> emplacements = [];
   List<String> types = [];
-  int hzb = 0;
+  late File? _photo;
+  final ImagePicker _picker = ImagePicker();
   String emplacement = "";
+  firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
   String type = "";
+  String link = "";
 
   String domaine = "";
-  late String _dockey;
-  late UserModel _userdata;
-  String? _user = Get.find<AuthController>().user;
-  String? _userid = Get.find<AuthController>().uid;
-  String? get user => _user;
 
   // MyServices myservices = Get.find();
 
   late DateTime date_debut;
 
   TextEditingController t_date_debut = TextEditingController();
-  TextEditingController t_date_fin = TextEditingController();
 
   getdata() async {
-    domaine = _user!.split("@")[1].split(".")[0];
-    print(domaine);
-    EasyLoading.show(status: "Telechragement");
-    await getemp();
-    await gettype();
-    EasyLoading.dismiss();
-    update();
+    if (_user != null) {
+      print(domaine);
+      domaine = _user!.split("@")[1].split(".")[0];
+      //  EasyLoading.show(status: "Téléchargement");
+      await getemp();
+      await gettype();
+      //  EasyLoading.dismiss();
+      update();
+    }
   }
 
   getemp() async {
@@ -105,30 +109,30 @@ class AddController extends GetxController {
   }
 
   save() async {
-    // Random random = new Random();
-    // Random random2 = new Random();
-    // int randomid = 1000 + random.nextInt(9000);
-    // int randomcode = 1000 + random2.nextInt(8000);
+    Random random = new Random();
+    int randomid = 1000 + random.nextInt(9000);
     // CollectionReference col = firestore.collection('khatma');
-    // KhatmaModel kh = KhatmaModel(
-    //     admin: user,
-    //     description: descriptionCrt.text,
-    //     id: randomid,
-    //     useruid: _userid,
-    //     man: repeated == "ختمة دورية يدوية" ? true : false,
-    //     auto: repeated == "ختمة دورية تلقائية" ? true : false,
-    //     name: nameCrt.text,
-    //     type: type,
-    //     code: randomcode + 100,
-    //     status: "مفتوح",
-    //     username: _userdata.name,
-    //     date_debut: date_debut.microsecondsSinceEpoch,
-    //     date_fin: date_fin.microsecondsSinceEpoch,
-    //     emplacements: int.parse(emplacement),
-    //     effectif: (60.0 / int.parse(emplacement)).round(),
-    //     duration: date_fin.difference(date_debut).inDays,
-    //     repeated: repeated);
-    // EasyLoading.show(status: 'جاري الحفظ...');
+    String newPostKey = "";
+    AnomalyModel an = AnomalyModel(
+        image: link,
+        id: randomid.toString(),
+        adddate: DateTime.now().microsecondsSinceEpoch,
+        date: date_debut.microsecondsSinceEpoch,
+        type: type,
+        user: user,
+        emplacement: emplacement,
+        status: "En_cours",
+        description: descriptionCrt.text);
+
+    EasyLoading.show(status: 'Enregisterment en cours...');
+    DatabaseReference ref = database.ref("$domaine/anomalies");
+    newPostKey = ref.push().key!;
+    await ref.child(newPostKey).update(an.toJson()).then((value) {
+      showmsg("Votre anomalie à été ajoutéd à la base");
+      t_date_debut.text = "";
+      descriptionCrt.text = "";
+      update();
+    });
 
     // await col.add(kh.toJson()).then((value) => _dockey = value.id);
     // print("&&&&-------------------------------------------------&&&&");
@@ -217,5 +221,47 @@ class AddController extends GetxController {
       btnCancelOnPress: () {},
       btnOkOnPress: () {},
     ).show();
+  }
+
+  Future imgFromGallery() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+
+    // setState(() {
+    if (pickedFile != null) {
+      _photo = File(pickedFile.path);
+      uploadFile();
+    } else {
+      print('No image selected.');
+    }
+    // });
+  }
+
+  Future imgFromCamera() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+
+    // setState(() {
+    if (pickedFile != null) {
+      _photo = File(pickedFile.path);
+      uploadFile();
+    } else {
+      print('No image selected.');
+    }
+    //  });
+  }
+
+  Future uploadFile() async {
+    if (_photo == null) return;
+    final fileName = basename(_photo!.path);
+    final destination = 'files/$fileName';
+
+    try {
+      final ref = firebase_storage.FirebaseStorage.instance
+          .ref(destination)
+          .child('file/');
+      await ref.putFile(_photo!);
+      link = await ref.getDownloadURL();
+    } catch (e) {
+      print('error occured');
+    }
   }
 }

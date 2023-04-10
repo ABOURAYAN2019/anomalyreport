@@ -32,7 +32,7 @@ class Add extends StatelessWidget {
                       CustomTextformfield(
                         valid: (val) {
                           if (val == null) return "Vide";
-                          return validInput(val!, 5, 30, "text");
+                          return validInput(val!, 2, 30, "text");
                         },
                         hintText: "Date de detection ",
                         headingText: "Date de detection",
@@ -44,7 +44,7 @@ class Add extends StatelessWidget {
                       CustumtextformfieldMultiline(
                         valid: (val) {
                           if (val == null) return "Vide";
-                          return validInput(val!, 5, 30, "text");
+                          return validInput(val!, 2, 30, "text");
                         },
                         hintText: "Description ",
                         controller: controller.descriptionCrt,
@@ -57,7 +57,7 @@ class Add extends StatelessWidget {
                       CustumDropdown(
                         valid: (val) {
                           if (val == null) return "Vide !";
-                          return validInput(val!, 0, 3, "text");
+                          return validInput(val!, 2, 30, "text");
                         },
                         onchanged: (val) {
                           controller.emplacement = val ?? "0";
@@ -68,7 +68,7 @@ class Add extends StatelessWidget {
                       CustumDropdown(
                           valid: (val) {
                             if (val == null) return "vide !";
-                            return validInput(val!, 5, 30, "text");
+                            return validInput(val!, 2, 30, "text");
                           },
                           onchanged: (val) {
                             controller.type = val ?? "";
@@ -77,6 +77,24 @@ class Add extends StatelessWidget {
                           hintText: "Type"),
                       SizedBox(
                         height: 10,
+                      ),
+                      ListTile(
+                        title: Text("Image ou illustration"),
+                        trailing: Row(
+                          children: [
+                            Icon(
+                              Icons.camera,
+                              size: 40,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Icon(
+                              Icons.folder,
+                              size: 40,
+                            )
+                          ],
+                        ),
                       ),
                       CustomButton(
                         onpressed: () {

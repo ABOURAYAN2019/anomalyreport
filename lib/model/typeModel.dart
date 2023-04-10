@@ -1,7 +1,7 @@
 class TypeModel {
   late String? key;
   late String? type;
-  late String? id;
+  late int? id;
 
   TypeModel({
     this.id,
