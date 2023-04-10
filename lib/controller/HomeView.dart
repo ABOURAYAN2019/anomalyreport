@@ -1,3 +1,4 @@
+import 'package:anomalyreport/controller/add_controller.dart';
 import 'package:anomalyreport/controller/admin_controller.dart';
 
 import 'package:anomalyreport/view/screens/add.dart';
@@ -21,7 +22,9 @@ class HomeView extends GetxController {
     switch (selectedValue) {
       case 0:
         {
+          Get.delete<AdminController>();
           currentScreen = Add();
+
           _pagename = "Déclarer une anomalie";
 
           //  Get.delete<EnduserController>();
@@ -32,6 +35,7 @@ class HomeView extends GetxController {
         }
       case 1:
         {
+          Get.delete<AddController>();
           currentScreen = Manage();
 
           _pagename = "Consulter et gérer";

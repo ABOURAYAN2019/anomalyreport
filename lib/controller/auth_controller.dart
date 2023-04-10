@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:math';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:anomalyreport/controller/HomeView.dart';
@@ -19,11 +20,12 @@ class AuthController extends GetxController {
   late Rx<User?> firebaseUser;
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+
   String? get user => firebaseUser.value?.email;
   String? get username => firebaseUser.value?.displayName;
   String? get uid => firebaseUser.value?.uid;
   bool isadmin = false;
-  late UserModel _userdata;
+
   GlobalKey<FormState> formKey_ = GlobalKey<FormState>();
 
   @override
@@ -31,27 +33,12 @@ class AuthController extends GetxController {
     super.onInit();
 
     firebaseUser = Rx<User?>(firebaseAuth.currentUser);
+    inspect(firebaseUser);
 
-    firebaseUser.bindStream(firebaseAuth.userChanges());
-    if (uid != null) {
-      await getuserdata();
-    }
+    firebaseUser!.bindStream(firebaseAuth.userChanges());
+    if (uid != null) {}
 
     // ever(firebaseUser, _setInitialScreen);
-  }
-
-  getuserdata() async {
-    print(uid);
-    // DocumentReference document = firestore.collection("Users").doc(uid);
-
-    // await document.get().then((DocumentSnapshot value) =>
-    //     _userdata = UserModel.fromJson(value.data() as Map<String, dynamic>));
-    // isadmin = _userdata.isadmin ?? false;
-    // update();
-    // print(
-    //     "userdata -----------------------------------------------------------------------------------");
-    // print(_userdata.name);
-    // print(_userdata.email);
   }
 
   void login() async {
@@ -61,7 +48,7 @@ class AuthController extends GetxController {
       EasyLoading.show(status: 'Connexion...');
       await firebaseAuth.signInWithEmailAndPassword(
           email: email.text, password: password.text);
-      await getuserdata();
+
       EasyLoading.dismiss();
       Get.offAll(ControlView());
     } on FirebaseAuthException catch (e) {

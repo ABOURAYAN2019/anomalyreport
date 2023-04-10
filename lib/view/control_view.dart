@@ -10,40 +10,36 @@ class ControlView extends GetWidget<AuthController> {
     AuthController moncrt = Get.find<AuthController>();
     Get.put(HomeView());
     return Obx(() {
-      AuthController().getuserdata();
       return (moncrt.user == null)
           ? OnBoarding()
           : GetBuilder<HomeView>(
               init: HomeView(),
-              builder: (controller) => Directionality(
-                textDirection: TextDirection.rtl,
-                child: Scaffold(
-                  appBar: AppBar(
-                    backgroundColor: Colors.amber,
-                    leading: controller.pageicon,
-                    title: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 30),
-                      child: Text(
-                        controller.pagename,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontFamily: 'almarai'),
-                      ),
+              builder: (controller) => Scaffold(
+                appBar: AppBar(
+                  backgroundColor: Colors.amber,
+                  leading: controller.pageicon,
+                  title: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    child: Text(
+                      controller.pagename,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontFamily: 'roboto'),
                     ),
-                    actions: [
-                      // IconButton(
-                      //   onPressed: () {
-                      //     Get.to(() => Profile(),
-                      //         transition: Transition.downToUp,
-                      //         duration: Duration(milliseconds: 500));
-                      //   },
-                      //   icon: Icon(Icons.person_2_sharp),
-                      //   color: Colors.white,
-                      // )
-                    ],
                   ),
-                  body: controller.currentScreen,
-                  bottomNavigationBar: bottomNavigationBar(),
+                  actions: [
+                    // IconButton(
+                    //   onPressed: () {
+                    //     Get.to(() => Profile(),
+                    //         transition: Transition.downToUp,
+                    //         duration: Duration(milliseconds: 500));
+                    //   },
+                    //   icon: Icon(Icons.person_2_sharp),
+                    //   color: Colors.white,
+                    // )
+                  ],
                 ),
+                body: controller.currentScreen,
+                bottomNavigationBar: bottomNavigationBar(),
               ),
             );
     });
@@ -75,7 +71,7 @@ class bottomNavigationBar extends StatelessWidget {
         color: Colors.amber,
         size: 30,
       ),
-      label: "تطور الختمات",
+      label: "Anomalies",
     ),
   ];
 
@@ -89,11 +85,11 @@ class bottomNavigationBar extends StatelessWidget {
         selectedItemColor: Colors.amber,
         unselectedLabelStyle: const TextStyle(
             color: Colors.black87,
-            fontFamily: 'almarai',
+            fontFamily: 'roboto',
             fontWeight: FontWeight.normal),
         selectedLabelStyle: const TextStyle(
             color: Colors.amber,
-            fontFamily: 'almarai',
+            fontFamily: 'roboto',
             fontWeight: FontWeight.bold),
         type: BottomNavigationBarType.fixed,
         items: list,

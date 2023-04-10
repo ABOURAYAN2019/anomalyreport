@@ -45,14 +45,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(AuthController());
     return GetMaterialApp(
-        title: 'ختمة',
+        title: 'AnomalyReport',
         initialRoute: "/",
         home: ControlView(),
         getPages: routes,
         builder: EasyLoading.init(),
         theme: ThemeData(
           primarySwatch: Colors.amber,
-          fontFamily: 'almarai',
+          fontFamily: 'roboto',
           textTheme: TextTheme(
             headlineSmall: TextStyle(fontFamily: 'almarai'),
             headlineMedium: TextStyle(fontFamily: 'almarai'),

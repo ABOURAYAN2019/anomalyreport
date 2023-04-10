@@ -5,7 +5,7 @@ import 'package:anomalyreport/core/functions/validinput.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:anomalyreport/model/partmodel.dart';
+import 'package:anomalyreport/model/anomalymodel.dart';
 import 'package:anomalyreport/view/commonwidgets/custom_text_form_multiline.dart';
 import 'package:anomalyreport/view/commonwidgets/custombutton.dart';
 import 'package:anomalyreport/view/commonwidgets/customslider.dart';

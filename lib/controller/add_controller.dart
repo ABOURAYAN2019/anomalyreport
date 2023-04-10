@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'package:anomalyreport/model/emplacementmodel.dart';
+import 'package:anomalyreport/model/typeModel.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:anomalyreport/controller/HomeView.dart';
 import 'package:anomalyreport/controller/auth_controller.dart';
@@ -11,16 +15,21 @@ import 'package:anomalyreport/data/static.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
 import 'package:anomalyreport/model/user_model.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class AddController extends GetxController {
   // FirebaseFirestore firestore = FirebaseFirestore.instance;
   TextEditingController descriptionCrt = TextEditingController();
   TextEditingController nameCrt = TextEditingController();
-  List<String> ahzabbypart = [];
+  FirebaseDatabase database = FirebaseDatabase.instance;
+
+  List<String> emplacements = [];
+  List<String> types = [];
   int hzb = 0;
-  String hizb = "";
+  String emplacement = "";
   String type = "";
-  String repeated = "";
+
+  String domaine = "";
   late String _dockey;
   late UserModel _userdata;
   String? _user = Get.find<AuthController>().user;
@@ -30,34 +39,72 @@ class AddController extends GetxController {
   // MyServices myservices = Get.find();
 
   late DateTime date_debut;
-  late DateTime date_fin;
+
   TextEditingController t_date_debut = TextEditingController();
   TextEditingController t_date_fin = TextEditingController();
 
-  @override
-  void onClose() {
-    // called just before the Controller is deleted from memory
-
-    super.onClose();
+  getdata() async {
+    domaine = _user!.split("@")[1].split(".")[0];
+    print(domaine);
+    EasyLoading.show(status: "Telechragement");
+    await getemp();
+    await gettype();
+    EasyLoading.dismiss();
+    update();
   }
 
-  getuserdata() async {
-    // print(_userid);
-    // DocumentReference document = firestore.collection("Users").doc(_userid);
+  getemp() async {
+    Map emp;
+    List<Map>? emp_ = [];
+    List<Emplacementmodel> cs = [];
+    Emplacementmodel c;
+    DatabaseReference lconduceturs = database.ref('$domaine/equipements');
+    DataSnapshot snapshot = await lconduceturs.get();
+    inspect(snapshot.value);
+    if (snapshot.value != null) {
+      final map = snapshot.value as Map;
+      map.forEach((key, value) {
+        emp = value;
+        emp['key'] = key;
+        emp_?.add(value);
+        // print(conducteur_);
+        c = Emplacementmodel.fromJson(emp);
+        cs.add(c);
+      });
+      cs.forEach((element) {
+        emplacements.add(element.eqp ?? "");
+      });
+      inspect(emplacements);
+    }
+    print(emplacements);
+  }
 
-    // await document.get().then((DocumentSnapshot value) =>
-    //     _userdata = UserModel.fromJson(value.data() as Map<String, dynamic>));
-    // print(
-    //     "userdata -----------------------------------------------------------------------------------");
-    // print(_userdata.name);
-    // print(_userdata.email);
+  gettype() async {
+    Map emp;
+    List<Map>? emp_ = [];
+    List<TypeModel> cs = [];
+    TypeModel c;
+    DatabaseReference lconduceturs = database.ref('$domaine/type');
+    DataSnapshot snapshot = await lconduceturs.get();
+    inspect(snapshot.value);
+    if (snapshot.value != null) {
+      final map = snapshot.value as Map;
+      map.forEach((key, value) {
+        emp = value;
+        emp['key'] = key;
+        emp_?.add(value);
+        // print(conducteur_);
+        c = TypeModel.fromJson(emp);
+        cs.add(c);
+      });
+      cs.forEach((element) {
+        types.add(element.type ?? "");
+      });
+      print(types);
+    }
   }
 
   save() async {
-    // //HomeView Function({String? tag}) home = Get.find<HomeView> ;
-    // HomeView home = Get.find<HomeView>();
-    // Map<String, dynamic> myahzab = {};
-
     // Random random = new Random();
     // Random random2 = new Random();
     // int randomid = 1000 + random.nextInt(9000);
@@ -77,8 +124,8 @@ class AddController extends GetxController {
     //     username: _userdata.name,
     //     date_debut: date_debut.microsecondsSinceEpoch,
     //     date_fin: date_fin.microsecondsSinceEpoch,
-    //     hizbs: int.parse(hizb),
-    //     effectif: (60.0 / int.parse(hizb)).round(),
+    //     emplacements: int.parse(emplacement),
+    //     effectif: (60.0 / int.parse(emplacement)).round(),
     //     duration: date_fin.difference(date_debut).inDays,
     //     repeated: repeated);
     // EasyLoading.show(status: 'جاري الحفظ...');
@@ -134,9 +181,17 @@ class AddController extends GetxController {
 
   @override
   void onInit() async {
-    await getuserdata();
-    print(_userdata);
+    await getdata();
     super.onInit();
+  }
+
+  @override
+  void onClose() async {
+    try {
+      EasyLoading.dismiss();
+    } catch (e) {}
+
+    super.onClose();
   }
 
   Adddatedebut() async {
@@ -150,23 +205,6 @@ class AddController extends GetxController {
 
     t_date_debut.text = DateFormat('yyyy-MM-dd').format(pickedDate);
     date_debut = pickedDate;
-  }
-
-  Adddatefin() async {
-    late DateTime selecteddate;
-    DateTime? pickedDate = await showDatePicker(
-        context: Get.context!,
-        initialDate: DateTime.now(),
-        firstDate: DateTime
-            .now(), //DateTime.now() - not to allow to choose before today.
-        lastDate: DateTime.now().add(const Duration(days: 365)));
-
-    if (pickedDate != null) {
-      selecteddate = pickedDate;
-      print(pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-      t_date_fin.text = DateFormat('yyyy-MM-dd').format(pickedDate);
-      date_fin = selecteddate;
-    }
   }
 
   showmsg(String message) {

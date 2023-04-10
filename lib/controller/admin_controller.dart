@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import 'package:firebase_database/firebase_database.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:anomalyreport/controller/HomeView.dart';
@@ -15,17 +15,16 @@ import 'package:get/get.dart';
 import 'package:anomalyreport/data/static.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
-import 'package:anomalyreport/model/partmodel.dart';
+import 'package:anomalyreport/model/anomalymodel.dart';
 import 'package:anomalyreport/model/user_model.dart';
-import 'package:anomalyreport/model/usermission.dart';
 import 'package:anomalyreport/view/commonwidgets/custom-dropdown_form_field.dart';
 
 import 'package:anomalyreport/view/screens/manage.dart';
 
 class AdminController extends GetxController {
   List<String?> khatmausers = [];
-  PartModel selectedpart = PartModel();
-  List<PartModel> parts = [];
+  FirebaseDatabase database = FirebaseDatabase.instance;
+
   List<UserModel> users = [];
 
   int hzb = 0;
@@ -46,18 +45,6 @@ class AdminController extends GetxController {
     super.onClose();
   }
 
-  getuserdata() async {
-    // print(_userid);
-    // DocumentReference document = firestore.collection("Users").doc(_userid);
-
-    // await document.get().then((DocumentSnapshot value) =>
-    //     _userdata = UserModel.fromJson(value.data() as Map<String, dynamic>));
-    // print(
-    //     "userdata -----------------------------------------------------------------------------------");
-    // print(_userdata.name);
-    // print(_userdata.email);
-  }
-
   close() {
     AwesomeDialog(
       context: Get.context!,
@@ -74,7 +61,6 @@ class AdminController extends GetxController {
 
   @override
   void onInit() async {
-    await getuserdata();
     // getdata();
     // Getallusers();
     // TODO: implement onInit

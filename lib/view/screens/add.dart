@@ -13,7 +13,6 @@ class Add extends StatelessWidget {
 
   final controller = Get.put(
     AddController(),
-    permanent: false,
   );
   final _formKey = GlobalKey<FormState>();
 
@@ -30,105 +29,52 @@ class Add extends StatelessWidget {
                   child: SingleChildScrollView(
                       child: Column(
                     children: [
-                      ListTile(
-                        leading: Icon(
-                          Icons.menu_book_outlined,
-                          color: Colors.white,
-                          size: 5,
-                        ),
-                        title: Text(
-                          'معلومات الختمة',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        tileColor: Colors.grey.shade500,
-                      ),
-                      CustomTextformfield(
-                        hintText: "إسم الختمة ",
-                        valid: (val) {
-                          if (val == null) return "حقل فارغ";
-                          return validInput(val!, 5, 30, "text");
-                        },
-                        headingText: "إسم الختمة _",
-                        controller: controller.nameCrt,
-                        readonly: false,
-                        prefixIcon: Icon(
-                          Icons.book,
-                        ),
-                      ),
-                      CustumtextformfieldMultiline(
-                        valid: (val) {
-                          if (val == null) return "حقل فارغ";
-                          return validInput(val!, 5, 30, "text");
-                        },
-                        hintText: "وصف الختمة ",
-                        controller: controller.descriptionCrt,
-                        headingText: "وصف الختمة _",
-                        readonly: false,
-                        prefixIcon: Icon(
-                          Icons.text_fields,
-                        ),
-                      ),
                       CustomTextformfield(
                         valid: (val) {
-                          if (val == null) return "حقل فارغ";
+                          if (val == null) return "Vide";
                           return validInput(val!, 5, 30, "text");
                         },
-                        hintText: "بداية الختمة ",
-                        headingText: "بداية الختمة",
+                        hintText: "Date de detection ",
+                        headingText: "Date de detection",
                         prefixIcon: Icon(Icons.date_range),
                         readonly: true,
                         onTap: () => controller.Adddatedebut(),
                         controller: controller.t_date_debut,
                       ),
-                      CustomTextformfield(
+                      CustumtextformfieldMultiline(
                         valid: (val) {
-                          if (val == null) return "حقل فارغ";
+                          if (val == null) return "Vide";
                           return validInput(val!, 5, 30, "text");
                         },
-                        hintText: " نهاية الختمة",
-                        headingText: "نهاية الختمة",
-                        prefixIcon: Icon(Icons.date_range),
-                        readonly: true,
-                        onTap: () => controller.Adddatefin(),
-                        controller: controller.t_date_fin,
+                        hintText: "Description ",
+                        controller: controller.descriptionCrt,
+                        headingText: " Description",
+                        readonly: false,
+                        prefixIcon: Icon(
+                          Icons.text_fields,
+                        ),
                       ),
                       CustumDropdown(
                         valid: (val) {
-                          if (val == null) return "حقل فارغ";
+                          if (val == null) return "Vide !";
                           return validInput(val!, 0, 3, "text");
                         },
                         onchanged: (val) {
-                          controller.hizb = val ?? "0";
+                          controller.emplacement = val ?? "0";
                         },
-                        items: [
-                          "1",
-                          "2",
-                          "3",
-                          "4",
-                          "5",
-                          "6",
-                          "10",
-                          "12",
-                          "15",
-                          "20",
-                          "30"
-                        ],
-                        hintText: " عدد الأحزاب لكل شخص",
+                        items: controller.emplacements,
+                        hintText: " Emplacement",
                       ),
                       CustumDropdown(
                           valid: (val) {
-                            if (val == null) return "حقل فارغ";
+                            if (val == null) return "vide !";
                             return validInput(val!, 5, 30, "text");
                           },
                           onchanged: (val) {
-                            controller.repeated = val ?? "ختمة لمرة واحدة";
+                            controller.type = val ?? "";
                           },
-                          items: [
-                            "ختمة لمرة واحدة",
-                            "ختمة دورية يدوية",
-                            "ختمة دورية تلقائية"
-                          ],
-                          hintText: " دورية الختمة"),
+                          items: controller.types,
+                          hintText: "Type"),
                       SizedBox(
                         height: 10,
                       ),
@@ -141,7 +87,7 @@ class Add extends StatelessWidget {
                         },
                         txtcolor: Colors.black,
                         backgroundColor: Colors.amber,
-                        captiontext: 'حفظ الختمة',
+                        captiontext: 'Sauvegarder',
                         icon: Icon(
                           Icons.save,
                           color: Colors.black,

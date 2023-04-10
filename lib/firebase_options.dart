@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -31,10 +28,7 @@ class DefaultFirebaseOptions {
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -52,11 +46,33 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDzhKr8lhlpKHB0TCGtxmqllEtWnq_c2xo',
-    appId: '1:1069058523554:android:c72b42e75a9bb685f7b2fb',
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyBOETCJsopcjbiIyBKzu22zewVVOGZKNk8',
+    appId: '1:1069058523554:web:25a023c0288bd632f7b2fb',
     messagingSenderId: '1069058523554',
     projectId: 'anomalyreport-4163e',
+    authDomain: 'anomalyreport-4163e.firebaseapp.com',
+    databaseURL: 'https://anomalyreport-4163e-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'anomalyreport-4163e.appspot.com',
+  );
+
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyDzhKr8lhlpKHB0TCGtxmqllEtWnq_c2xo',
+    appId: '1:1069058523554:android:ba00ad614f00d588f7b2fb',
+    messagingSenderId: '1069058523554',
+    projectId: 'anomalyreport-4163e',
+    databaseURL: 'https://anomalyreport-4163e-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'anomalyreport-4163e.appspot.com',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyCkcsCsRadbQUgzihdTxYzipkuSgDz0o5s',
+    appId: '1:1069058523554:ios:8568e56fe203bb9ff7b2fb',
+    messagingSenderId: '1069058523554',
+    projectId: 'anomalyreport-4163e',
+    databaseURL: 'https://anomalyreport-4163e-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'anomalyreport-4163e.appspot.com',
+    iosClientId: '1069058523554-a8fek20bd1r47fvmvfpnq8aoomhers1b.apps.googleusercontent.com',
+    iosBundleId: 'com.diy.anomalyreport',
   );
 }
