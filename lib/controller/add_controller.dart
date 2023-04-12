@@ -257,15 +257,18 @@ class AddController extends GetxController {
     if (_photo == null) return;
     final fileName = basename(_photo!.path);
     final destination = 'files/$fileName';
-
+    EasyLoading.show(status: 'Enregisterment en cours...');
     try {
       final ref = firebase_storage.FirebaseStorage.instance
           .ref(destination)
           .child('file/');
       await ref.putFile(_photo!);
       link = await ref.getDownloadURL();
+      EasyLoading.dismiss();
+      update();
     } catch (e) {
       print('error occured');
+      EasyLoading.dismiss();
     }
   }
 

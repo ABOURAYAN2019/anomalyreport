@@ -106,6 +106,15 @@ class Add extends StatelessWidget {
                           size: 30,
                         ),
                       ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      controller.link != ""
+                          ? Container(
+                              margin: EdgeInsets.symmetric(horizontal: 50),
+                              child: Image.network(controller.link,
+                                  height: 300, fit: BoxFit.fill))
+                          : SizedBox.shrink(),
                     ],
                   ))),
             )));
