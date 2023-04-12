@@ -165,9 +165,11 @@ class AdminController extends GetxController {
             actions: <Widget>[
               ElevatedButton(
                   child: Text("Chercher"),
-                  onPressed: () {
+                  onPressed: () async {
+                    await getdataarchive();
                     Navigator.pop(context);
-                    //   getdataarchive();
+
+                    update();
                   }),
             ],
           );
@@ -175,6 +177,9 @@ class AdminController extends GetxController {
   }
 
   getdataarchive() async {
+    print(
+        "------------------------------------------------------------------------------------------------------------------");
+    inspect(selectedeqp);
     resulttype = "Anomalies   $selectedeqp";
     anomalies = [];
 
@@ -184,7 +189,7 @@ class AdminController extends GetxController {
     AnomalyModel c;
     Query lconduceturs = database
             .ref('$domaine/anomalies')
-            .orderByChild("eqp")
+            .orderByChild("emplacement")
             .equalTo(selectedeqp)
         //.limitToLast(20);
         ;
@@ -204,9 +209,10 @@ class AdminController extends GetxController {
       cs.forEach((element) {
         anomalies.add(element);
       });
-      loading = false;
-      update();
+
       //  inspect(emplacements);
     }
+    loading = false;
+    update();
   }
 }
