@@ -220,7 +220,7 @@ class AddController extends GetxController {
       context: Get.context!,
       dialogType: DialogType.warning,
       animType: AnimType.bottomSlide,
-      title: 'إخبار',
+      title: 'Alerte',
       desc: message,
       btnCancelOnPress: () {},
       btnOkOnPress: () {},

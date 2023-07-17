@@ -20,14 +20,14 @@ validInput(String val, int min, int max, String type) {
   }
 
   if (val.isEmpty) {
-    return "حقل فارغ ..غير ممكن ";
+    return "Champ non valide";
   }
 
   if (val.length < min) {
-    return "  $minطول النصل يجب ان يتجاوز  ";
+    return "  Champ non valide ";
   }
 
   if (val.length > max) {
-    return " ، نص طوي جدا ";
+    return "Champ non valide";
   }
 }

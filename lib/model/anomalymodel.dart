@@ -11,9 +11,11 @@ class AnomalyModel {
   late String? user;
   late int? adddate;
   late int? updatedate;
+  late String? updater;
   late int? terminatedate;
   AnomalyModel(
-      {this.image,
+      {this.updater,
+      this.image,
       this.user,
       this.description,
       this.id,
@@ -32,6 +34,7 @@ class AnomalyModel {
       return;
     }
     comments = map["comments"];
+    updater = map["updater"];
     image = map["image"];
     id = map["id"];
     key = map["key"];
@@ -60,7 +63,8 @@ class AnomalyModel {
       "user": user,
       "adddate": adddate,
       "updatedate": updatedate,
-      "terminatedate": terminatedate
+      "terminatedate": terminatedate,
+      "updater": updater
     };
   }
 }

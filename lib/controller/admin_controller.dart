@@ -45,6 +45,7 @@ class AdminController extends GetxController {
   }
 
   getdata() async {
+    anomalies = [];
     Map emp;
     List<Map>? emp_ = [];
     List<AnomalyModel> cs = [];
@@ -72,23 +73,12 @@ class AdminController extends GetxController {
         anomalies.add(element);
       });
       loading = false;
+      update();
       //  inspect(emplacements);
     }
+    loading = false;
+    update();
     // print(emplacements);
-  }
-
-  close() {
-    AwesomeDialog(
-      context: Get.context!,
-      dialogType: DialogType.error,
-      animType: AnimType.bottomSlide,
-      title: 'تحدير',
-      desc: "تقوم الآن بحدف الختمة كاملة من قاعدة البيانات",
-      btnCancelOnPress: () {},
-      btnOkOnPress: () {
-        Get.back();
-      },
-    ).show();
   }
 
   @override
@@ -214,5 +204,28 @@ class AdminController extends GetxController {
     }
     loading = false;
     update();
+  }
+
+  void cancelitem(AnomalyModel anomali) async {
+    print(anomali.key);
+    anomali.status = "Annulé";
+    anomali.updater = user;
+    await database
+        .ref("$domaine/anomalies")
+        .child(anomali.key ?? "")
+        .set(anomali.toJson());
+    getdata();
+  }
+
+  void terminateitem(AnomalyModel anomali) async {
+    print(anomali.key);
+    anomali.updatedate = DateTime.now().microsecondsSinceEpoch;
+    anomali.status = "Terminé";
+    anomali.updater = user;
+    await database
+        .ref("$domaine/anomalies")
+        .child(anomali.key ?? "")
+        .set(anomali.toJson());
+    getdata();
   }
 }

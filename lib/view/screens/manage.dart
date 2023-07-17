@@ -140,7 +140,11 @@ class Manage extends StatelessWidget {
                                                 horizontal: 10, vertical: 2),
                                             width: double.infinity,
                                             child: ElevatedButton.icon(
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  controller.terminateitem(
+                                                      controller
+                                                          .anomalies[index]);
+                                                },
                                                 icon: Icon(Icons.close),
                                                 label: Text("Terminer")),
                                           )
@@ -157,7 +161,11 @@ class Manage extends StatelessWidget {
                                                   backgroundColor:
                                                       Colors.red.shade300,
                                                 ),
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  controller.cancelitem(
+                                                      controller
+                                                          .anomalies[index]);
+                                                },
                                                 icon: Icon(Icons.close),
                                                 label: Text("Annuler")),
                                           )
